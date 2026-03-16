@@ -141,13 +141,66 @@ Most use autoregression, but there are methods that predict multiple events in a
 
 ---
 
-# Long Horizon Forecasting
+# T-mAP
 
-Formal statement
+Long horizon forecasting formal statement
 
+- Predicted $(t^p, l^p)$, true $(t^{gt}, l^{gt})$
+- Correct prediction criteria:
+    1. $|t^p - t^{gt}| \leqslant \delta$
+    2. $l^p = l^{gt}$
 
+**Temporal mean Average Precision** (T-mAP):
 
+- Horizon length $T$, maximum allowed $\delta$
+- Within the horizon, select classifier threshold $h$ and filter predicted events
+- Find a matching with ground truth that maximizes precision and recall (cover $c$) using Jonker-Volgenant algorithm
+- Vary threshold $h$ to obtain a precision-recall curve and obtain Average Precision (AP)
 
+---
+
+# T-mAP
+
+- Sequences $S_p^l$ and $S_{gt}^l$
+- Create bipartite graph with edge weights $-s_i^p$ - logits
+- Jonker-Volgenant algorithm finds the matching with the maximum number of edges in the graph, such that the resulting matching minimizes the total cost of the selected edges
+
+**Theorem 3.1.** For any threshold $h$ there exists an optimal matching in the graph $\mathcal G_h$, that is, a subset of an optimal matching in the full graph $\mathcal G$.
+
+We can compute the matching for the prediction $S_{gt}^l$ and subsequently reuse it for all thresholds $h$.
+
+<br/>
+<img border="rounded" src="./images/tmap_details.png" alt="" >
+
+---
+
+# T-mAP Vs OTD
+
+<img border="rounded" src="./images/tmap_vs_otd.png" alt="" >
+
+---
+
+# Datasets
+
+<img border="rounded" src="./images/table2.png" alt="" >
+
+---
+
+# Label Entropy
+
+<img border="rounded" src="./images/label_diversity.png" alt="" >
+
+---
+
+# T-mAP delta
+
+<img border="rounded" src="./images/tmap_delta.png" alt="" >
+
+---
+
+# Efficiency in compute
+
+<img border="rounded" src="./images/tableg4.png" alt="" >
 
 ---
 
